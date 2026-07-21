@@ -45,6 +45,7 @@ if ((Split-Path -Leaf $repoRoot) -ne "MLI-Knot-LAB-CLUSTER-PUBLIC") {
 
 $expectedFiles = @(
     ".gitattributes"
+    ".github/workflows/publication-audit.yml"
     ".gitignore"
     "LICENSE"
     "README.md"
@@ -59,6 +60,12 @@ $expectedFiles = @(
     "scripts/cluster_run.sh"
     "scripts/cluster_sudo_run.sh"
     "tools/audit_publication.ps1"
+)
+
+$workflowPath = ".github/workflows/publication-audit.yml"
+$trustedCheckoutPin = (
+    "3d3c42e5aac5ba805825" +
+    "da76410c181273ba90b1"
 )
 
 $fileMap = @{}
@@ -216,7 +223,16 @@ foreach ($relative in @($textCache.Keys)) {
     $text = [string]$textCache[$relative]
 
     foreach ($entry in $sensitivePatterns.GetEnumerator()) {
-        if ([regex]::IsMatch($text, [string]$entry.Value)) {
+        $textToScan = $text
+
+        if (
+            $entry.Key -eq "hash operacional ou commit" -and
+            $relative -eq $workflowPath
+        ) {
+            $textToScan = $textToScan.Replace($trustedCheckoutPin, "")
+        }
+
+        if ([regex]::IsMatch($textToScan, [string]$entry.Value)) {
             Add-AuditError "$($entry.Key) potencial encontrado em $relative"
         }
     }
@@ -274,6 +290,63 @@ foreach ($relative in @($textCache.Keys)) {
 
     if ($blockedAddressFound) {
         Add-AuditError "IPv4 fora das faixas públicas permitidas em $relative"
+    }
+}
+
+if ($textCache.ContainsKey($workflowPath)) {
+    $workflowText = [string]$textCache[$workflowPath]
+    $checkoutReference = "uses: actions/checkout@$trustedCheckoutPin"
+    $checkoutCount = [regex]::Matches(
+        $workflowText,
+        [regex]::Escape($checkoutReference)
+    ).Count
+    $usesCount = [regex]::Matches(
+        $workflowText,
+        '(?m)^[ \t]*uses:[ \t]*\S+[ \t]*$'
+    ).Count
+
+    if ($checkoutCount -ne 1 -or $usesCount -ne 1) {
+        Add-AuditError "workflow deve usar somente o checkout fixado"
+    }
+
+    if (-not $workflowText.Contains("permissions:`n  contents: read`n")) {
+        Add-AuditError "workflow sem permissão global somente leitura"
+    }
+
+    if (-not $workflowText.Contains("persist-credentials: false")) {
+        Add-AuditError "workflow mantém credenciais após o checkout"
+    }
+
+    $auditRunReference = "run: ./tools/audit_publication.ps1"
+    $auditRunCount = [regex]::Matches(
+        $workflowText,
+        [regex]::Escape($auditRunReference)
+    ).Count
+    $runCount = [regex]::Matches(
+        $workflowText,
+        '(?m)^[ \t]*run:[ \t]*\S.*$'
+    ).Count
+
+    if ($auditRunCount -ne 1 -or $runCount -ne 1) {
+        Add-AuditError "workflow deve executar somente a auditoria canônica"
+    }
+
+    if (
+        [regex]::IsMatch(
+            $workflowText,
+            '(?im)^[ \t]*(?:pull_request_target|workflow_run):'
+        )
+    ) {
+        Add-AuditError "gatilho privilegiado não permitido no workflow"
+    }
+
+    if (
+        [regex]::IsMatch(
+            $workflowText,
+            '(?im)^[ \t]*(?:permissions:[ \t]*write-all|[a-z-]+:[ \t]*write)[ \t]*$'
+        )
+    ) {
+        Add-AuditError "permissão de escrita não permitida no workflow"
     }
 }
 
@@ -478,13 +551,68 @@ if ($textCache.ContainsKey("scripts/cluster_sudo_run.sh")) {
     }
 }
 
-$bash = Get-Command bash -ErrorAction SilentlyContinue
+$bashCandidates = [System.Collections.Generic.List[string]]::new()
+$candidateSet = [System.Collections.Generic.HashSet[string]]::new(
+    [System.StringComparer]::OrdinalIgnoreCase
+)
+$isWindows = (
+    [System.Environment]::OSVersion.Platform -eq
+    [System.PlatformID]::Win32NT
+)
 
-if ($null -eq $bash) {
-    Add-AuditError "bash não encontrado para validação sintática"
+if ($isWindows) {
+    $gitCommand = Get-Command git.exe -ErrorAction SilentlyContinue |
+        Select-Object -First 1
+
+    if ($null -ne $gitCommand -and $gitCommand.Path) {
+        $gitDirectory = Split-Path -Parent $gitCommand.Path
+        $gitInstallRoot = Split-Path -Parent $gitDirectory
+
+        foreach ($relative in @("bin/bash.exe", "usr/bin/bash.exe")) {
+            $candidate = Join-Path $gitInstallRoot $relative
+
+            if (
+                (Test-Path -LiteralPath $candidate -PathType Leaf) -and
+                $candidateSet.Add($candidate)
+            ) {
+                $bashCandidates.Add($candidate)
+            }
+        }
+    }
 }
 else {
-    $bashExecutable = $bash.Definition
+    foreach ($command in @(Get-Command bash -All -ErrorAction SilentlyContinue)) {
+        $candidate = $command.Definition
+
+        if ($candidate -and $candidateSet.Add($candidate)) {
+            $bashCandidates.Add($candidate)
+        }
+    }
+}
+
+$bashExecutable = $null
+
+foreach ($candidate in $bashCandidates) {
+    $candidateExitCode = 1
+
+    try {
+        & $candidate --version *> $null
+        $candidateExitCode = $LASTEXITCODE
+    }
+    catch {
+        $candidateExitCode = 1
+    }
+
+    if ($candidateExitCode -eq 0) {
+        $bashExecutable = $candidate
+        break
+    }
+}
+
+if ($null -eq $bashExecutable) {
+    Add-AuditError "interpretador Bash utilizável não encontrado"
+}
+else {
 
     Push-Location -LiteralPath $repoRoot
     try {

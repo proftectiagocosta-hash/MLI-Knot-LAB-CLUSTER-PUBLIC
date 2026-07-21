@@ -95,6 +95,19 @@ Antes de preparar um commit:
 
 A auditoria automatizada complementa, mas não substitui, a revisão humana.
 
+### Auditoria contínua no GitHub
+
+O workflow de auditoria é executado em pushes para `main`, em Pull Requests destinados a `main` e por acionamento manual.
+
+Ele:
+
+- usa somente permissão de leitura;
+- desabilita a persistência de credenciais;
+- fixa ações externas por commit verificado;
+- executa `tools/audit_publication.ps1`;
+- não utiliza segredos adicionais;
+- deve se tornar um check obrigatório da `main` após a primeira execução bem-sucedida.
+
 ### 5. Preparar o commit
 
 Somente arquivos aprovados devem entrar na área de preparação.
@@ -183,5 +196,7 @@ Uma atualização é considerada concluída somente quando:
 Every public update is independently authored from an explicit allowlist. Private history, raw files, operational identifiers, credentials and reversible infrastructure details must never be transferred.
 
 Potentially useful concepts are rewritten with generic names, configurable variables and synthetic examples. Local automated checks and manual review must both succeed before any commit or remote publication.
+
+The canonical audit also runs on GitHub Actions with read-only permissions.
 
 If exposure is suspected, publishing stops immediately. Compromised secrets are revoked or rotated before repository cleanup is treated as complete.

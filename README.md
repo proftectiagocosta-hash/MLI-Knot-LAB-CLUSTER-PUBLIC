@@ -13,6 +13,7 @@
 ![Scope](https://img.shields.io/badge/scope-public%20curated%20layer-0f766e)
 ![Language](https://img.shields.io/badge/language-PT--BR%20%7C%20EN-0891b2)
 ![License](https://img.shields.io/badge/license-MIT-16a34a)
+[![Publication audit](https://github.com/proftectiagocosta-hash/MLI-Knot-LAB-CLUSTER-PUBLIC/actions/workflows/publication-audit.yml/badge.svg)](https://github.com/proftectiagocosta-hash/MLI-Knot-LAB-CLUSTER-PUBLIC/actions/workflows/publication-audit.yml)
 
 [Português](#português) | [English](#english)
 
@@ -88,15 +89,16 @@ Todos os exemplos públicos devem utilizar nomes genéricos, variáveis configur
 
 Os critérios completos serão registrados em [`docs/SANITIZATION.md`](docs/SANITIZATION.md).
 
-### Conteúdo planejado
+### Conteúdo público
 
 - [`docs/EVOLUTION.md`](docs/EVOLUTION.md): linha evolutiva consolidada;
 - [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md): arquitetura pública e fluxo conceitual;
 - [`docs/SANITIZATION.md`](docs/SANITIZATION.md): política de sanitização;
 - [`docs/PUBLICATION_WORKFLOW.md`](docs/PUBLICATION_WORKFLOW.md): fluxo de atualização da vitrine;
+- [`.github/workflows/publication-audit.yml`](.github/workflows/publication-audit.yml): executa a auditoria automática em pushes e Pull Requests;
 - [`examples/cluster_hosts.example.txt`](examples/cluster_hosts.example.txt): inventário inteiramente fictício;
 - `scripts/`: versões públicas, parametrizadas e revisadas dos scripts selecionados;
-- `tools/audit_publication.ps1`: verificação preventiva antes de cada publicação.
+- `tools/audit_publication.ps1`: executa a auditoria preventiva localmente e no GitHub Actions.
 
 ### Modelo de atualização
 
