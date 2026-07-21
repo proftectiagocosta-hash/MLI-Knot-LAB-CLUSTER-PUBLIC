@@ -1,0 +1,79 @@
+# Environment variables and credentials
+.env
+.env.*
+!.env.example
+*.secret
+*.secrets
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+*.keystore
+
+# SSH and authentication material
+.ssh/
+id_rsa
+id_rsa.*
+id_ed25519
+id_ed25519.*
+known_hosts
+authorized_keys
+
+# Provider and infrastructure credentials
+.aws/
+.azure/
+.gnupg/
+.kube/
+*.tfstate
+*.tfstate.*
+
+# Private source material
+private/
+raw/
+source-private/
+sanitization-work/
+docs/checkpoints/
+MIGRATION_MANIFEST.md
+MIGRATION_SHA256.txt
+
+# Real operational inventories
+cluster_hosts.txt
+inventory-real/
+config-private/
+
+# Runtime data and logs
+*.log
+*.pid
+*.db
+*.sqlite
+*.sqlite3
+cluster-logs/
+cluster-jobs/
+cluster-exports/
+cluster-storage/
+logs/
+
+# Generated audit output
+audit-reports/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Editors and operating systems
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.bak
+*.swp
+*~

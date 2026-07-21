@@ -1,0 +1,14 @@
+# Synthetic public inventory / Inventário público sintético
+#
+# These names use the reserved .invalid domain and must not resolve.
+# Estes nomes usam o domínio reservado .invalid e não devem resolver.
+#
+# One SSH target per line. Blank lines and comments are ignored.
+# Um alvo SSH por linha. Linhas vazias e comentários são ignorados.
+#
+# Point HOSTS_FILE to a private, unversioned inventory for real use.
+# Para uso real, aponte HOSTS_FILE para um inventário privado não versionado.
+
+node-a.example.invalid
+node-b.example.invalid
+node-c.example.invalid
