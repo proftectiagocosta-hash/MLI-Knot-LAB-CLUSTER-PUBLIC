@@ -555,12 +555,12 @@ $bashCandidates = [System.Collections.Generic.List[string]]::new()
 $candidateSet = [System.Collections.Generic.HashSet[string]]::new(
     [System.StringComparer]::OrdinalIgnoreCase
 )
-$isWindows = (
+$executandoNoWindows = (
     [System.Environment]::OSVersion.Platform -eq
     [System.PlatformID]::Win32NT
 )
 
-if ($isWindows) {
+if ($executandoNoWindows) {
     $gitCommand = Get-Command git.exe -ErrorAction SilentlyContinue |
         Select-Object -First 1
 
