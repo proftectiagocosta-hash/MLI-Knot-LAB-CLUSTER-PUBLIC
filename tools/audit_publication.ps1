@@ -47,6 +47,7 @@ $expectedFiles = @(
     ".gitattributes"
     ".github/workflows/publication-audit.yml"
     ".gitignore"
+    "CONTRIBUTING.md"
     "LICENSE"
     "README.md"
     "SECURITY.md"
