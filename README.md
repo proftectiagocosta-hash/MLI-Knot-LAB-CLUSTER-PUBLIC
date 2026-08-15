@@ -1,8 +1,13 @@
-# MLI-Knot LAB-CLUSTER — Public Showcase
+# MLI-Knot-LAB-CLUSTER-PUBLIC — Public Showcase
+
+> **Status:** vitrine técnica pública e sanitizada do LAB-CLUSTER.  
+> **História Git:** independente da fonte operacional privada; não é espelho nem cópia direta.  
+> **Publicação:** alterações públicas devem continuar passando por sanitização, auditoria e revisão.
+
 
 <div align="center">
 
-<img src="https://raw.githubusercontent.com/proftectiagocosta-hash/mli-knot-mind-public/main/assets/matrix-inspired-banner.gif" width="100%" alt="Matrix-inspired cyber banner for MLI-Knot LAB-CLUSTER" />
+<img src="https://raw.githubusercontent.com/proftectiagocosta-hash/MLI-Knot-Mind-Showcase/main/assets/matrix-inspired-banner.gif" width="100%" alt="Matrix-inspired cyber banner for MLI-Knot LAB-CLUSTER" />
 
 </div>
 
