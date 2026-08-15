@@ -1,4 +1,9 @@
-# MLI-Knot LAB-CLUSTER — Public Showcase
+# MLI-Knot-LAB-CLUSTER-PUBLIC — Public Showcase
+
+> **Status:** vitrine técnica pública e sanitizada do LAB-CLUSTER.
+> **História Git:** independente da fonte operacional privada; não é espelho nem cópia direta.
+> **Publicação:** alterações públicas devem continuar passando por sanitização, auditoria e revisão.
+
 
 <div align="center">
 
