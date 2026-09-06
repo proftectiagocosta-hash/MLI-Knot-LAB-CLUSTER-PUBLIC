@@ -7,7 +7,7 @@
 
 <div align="center">
 
-<img src="https://raw.githubusercontent.com/proftectiagocosta-hash/mli-knot-mind-public/main/assets/matrix-inspired-banner.gif" width="100%" alt="Matrix-inspired cyber banner for MLI-Knot LAB-CLUSTER" />
+<img src="assets/matrix-inspired-banner.gif" width="100%" alt="Matrix-inspired cyber banner for MLI-Knot LAB-CLUSTER" />
 
 </div>
 

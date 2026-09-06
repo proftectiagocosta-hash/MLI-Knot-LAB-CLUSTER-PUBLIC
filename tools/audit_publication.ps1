@@ -45,6 +45,7 @@ if ((Split-Path -Leaf $repoRoot) -ne "MLI-Knot-LAB-CLUSTER-PUBLIC") {
 
 $expectedFiles = @(
     ".gitattributes"
+    "assets/matrix-inspired-banner.gif"
     ".github/workflows/publication-audit.yml"
     ".gitignore"
     "CONTRIBUTING.md"
@@ -122,10 +123,18 @@ if ($treeDifferences.Count -eq 0) {
     Write-AuditOk "árvore limitada aos $($expectedFiles.Count) arquivos permitidos"
 }
 
+$binaryFiles = @(
+    "assets/matrix-inspired-banner.gif"
+)
+
+$textFiles = @(
+    $expectedFiles | Where-Object { $_ -notin $binaryFiles }
+)
+
 $utf8Strict = [System.Text.UTF8Encoding]::new($false, $true)
 $textCache = @{}
 
-foreach ($relative in $expectedFiles) {
+foreach ($relative in $textFiles) {
     if (-not $fileMap.ContainsKey($relative)) {
         continue
     }
@@ -386,10 +395,7 @@ foreach ($relative in $markdownFiles) {
 if ($textCache.ContainsKey("README.md")) {
     $readme = [string]$textCache["README.md"]
 
-    $canonicalBanner =
-        "https://raw.githubusercontent.com/proftectiagocosta-hash/" +
-        "mli-knot-mind-public/main/assets/" +
-        "matrix-inspired-banner.gif"
+    $canonicalBanner = "assets/matrix-inspired-banner.gif"
 
     $bannerCount = [regex]::Matches(
         $readme,
