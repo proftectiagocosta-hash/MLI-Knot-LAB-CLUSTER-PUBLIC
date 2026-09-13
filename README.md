@@ -16,6 +16,9 @@
 
 ![Status](https://img.shields.io/badge/status-sanitized%20showcase-2563eb)
 ![Scope](https://img.shields.io/badge/scope-public%20curated%20layer-0f766e)
+![Historical documented coverage](https://img.shields.io/badge/historical%20documented%20coverage-100%25-brightgreen)
+![GitHub stars](https://img.shields.io/github/stars/proftectiagocosta-hash/MLI-Knot-LAB-CLUSTER-PUBLIC?style=flat&label=stars)
+![README views](https://hits.sh/github.com/proftectiagocosta-hash/MLI-Knot-LAB-CLUSTER-PUBLIC.svg?label=README%20views)
 ![Language](https://img.shields.io/badge/language-PT--BR%20%7C%20EN-0891b2)
 ![License](https://img.shields.io/badge/license-MIT-16a34a)
 [![Publication audit](https://github.com/proftectiagocosta-hash/MLI-Knot-LAB-CLUSTER-PUBLIC/actions/workflows/publication-audit.yml/badge.svg)](https://github.com/proftectiagocosta-hash/MLI-Knot-LAB-CLUSTER-PUBLIC/actions/workflows/publication-audit.yml)
@@ -122,6 +125,14 @@ A vitrine acompanha a evolução do laboratório sem transformar o repositório 
 
 A primeira publicação consolida o aprendizado histórico até a etapa de consulta local somente leitura.
 
+### Marcador de progresso documental
+
+O repositório-fonte declara como último estado documental a **Fase 15 — API local mínima somente leitura**, e a linha evolutiva pública também encerra seu registro atual na **Fase 15**.
+
+**Cobertura da linha histórica atualmente documentada: 100%.**
+
+O denominador deste percentual é exclusivamente a **linha histórica atualmente declarada pelo snapshot fonte, encerrada na Fase 15**. Ele não representa conclusão de produto, prontidão operacional atual, disponibilidade da infraestrutura física, esforço de engenharia total ou autorização automática de uma fase futura.
+
 Isso não confirma que a infraestrutura física esteja atualmente ligada, acessível ou reproduzida exatamente como nos exemplos. O conteúdo deve ser tratado como material educacional e demonstração de evolução técnica.
 
 ### Uso responsável
@@ -166,6 +177,14 @@ Real infrastructure addresses, hardware identifiers, usernames, credentials, raw
 ### Update strategy
 
 New work is validated privately first. Publicly useful learning is then abstracted, sanitized, audited, reviewed, and published through a dedicated Pull Request.
+
+### Documented progress marker
+
+The private historical snapshot declares **Phase 15 — minimal local read-only API** as its last documented state, and the public evolution record currently ends at the same Phase 15.
+
+**Coverage of the currently documented historical line: 100%.**
+
+The denominator is only the historical line currently declared by the source snapshot through Phase 15. This is not product completion, current operational readiness, evidence that the physical lab is online, total engineering-effort completion, or automatic authorization for a future phase.
 
 This repository is an educational showcase, not a production-ready cluster distribution and not evidence of the current operational state of the physical lab.
 
